@@ -48,7 +48,16 @@
       <li>
         <i class="fa-li fas fa-envelope fa-2x" aria-hidden="true"></i>
         <span id="person-email" itemprop="email">
-        {{- if $autolink }}<a href="mailto:{{ $.Site.Params.email }}">{{ $.Site.Params.email }}</a>{{ else }}{{ $.Site.Params.email }}{{ end -}}
+            <strong>E-Mail:</strong> {{ if $autolink }}<a href="mailto:{{ $.Site.Params.email }}">{{ $.Site.Params.email }}</a>{{ else }}{{ $.Site.Params.email }}{{ end -}}
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.gpgkey }}
+      <li>
+        <i class="fa-li fas fa-key fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>GnuPG Key:</strong> <a href="http://keys.gnupg.net/pks/lookup?op=get&search=0x{{ . }}">{{ . }}</a>
         </span>
       </li>
       {{ end }}
@@ -62,14 +71,78 @@
       </li>
       {{ end }}
 
+      {{ with $.Site.Params.xmpp }}
+      <li>
+        <i class="fa-li fas fa-comments fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>XMPP:</strong> {{ . }}
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.matrix }}
+      <li>
+        <i class="fa-li fas fa-comments fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>Matrix:</strong> {{ . }}
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.ircfreenode }}
+      <li>
+        <i class="fa-li fas fa-comments fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>IRC:</strong> {{ . }} on FreeNode
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.telegram }}
+      <li>
+        <i class="fa-li fab fa-telegram fa-2x" aria-hidden="true"></i>
+        <span>
+        <strong>Telegram:</strong> {{ if $autolink }}<a href="https://telegram.me/{{ . }}" target="_blank" rel="noopener">@{{ . }}</a>{{ else }}@{{ . }}{{ end }}
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.mastodon }}
+      <li>
+        <i class="fa-li fab fa-mastodon fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>Mastodon:</strong> <a href="{{ .url }}">{{ .handle }}</a>
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.twitter }}
+      <li>
+        <i class="fa-li fab fa-twitter fa-2x" aria-hidden="true"></i>
+        <span>
+            <strong>Twitter:</strong> <a href="https://twitter.com/{{ . }}">@{{ . }}</a>
+        </span>
+      </li>
+      {{ end }}
+
+      {{ with $.Site.Params.github }}
+      <li>
+        <i class="fa-li fab fa-github fa-2x" aria-hidden="true"></i>
+        <span>
+        <strong>GitHub:</strong> <a href="https://github.com/{{ . }}">@{{ . }}</a>
+        </span>
+      </li>
+      {{ end }}
+
       {{ with $.Site.Params.keybase }}
       <li>
         <i class="fa-li fab fa-keybase fa-2x" aria-hidden="true"></i>
         <span>
-          <a href="https://keybase.io/{{ . }}" target="_blank" rel="noopener">@{{ . }}</a> on Keybase.
+          <strong>Keybase:</strong> <a href="https://keybase.io/{{ . }}" target="_blank" rel="noopener">@{{ . }}</a>
         </span>
       </li>
       {{ end }}
+
 
       {{ with $.Site.Params.phone }}
       <li>
@@ -89,11 +162,12 @@
       </li>
       {{ end }}
 
-      {{ with $.Site.Params.telegram }}
+
+      {{ with $.Site.Params.bitcoin }}
       <li>
-        <i class="fa-li fab fa-telegram fa-2x" aria-hidden="true"></i>
+        <i class="fa-li fab fa-btc fa-2x" aria-hidden="true"></i>
         <span>
-        {{- if $autolink }}<a href="https://telegram.me/{{ . }}" target="_blank" rel="noopener">@{{ . }}</a>{{ else }}@{{ . }}{{ end -}}
+            <strong>Bitcoin:</strong> <a href="bitcoin:{{ . }}">{{ . }}</a>
         </span>
       </li>
       {{ end }}
@@ -111,6 +185,7 @@
         <span>{{ . | markdownify | emojify }}</span>
       </li>
       {{ end }}
+
 
       {{ with $.Site.Params.appointment_url }}
       <li>

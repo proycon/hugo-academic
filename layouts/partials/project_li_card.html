@@ -16,6 +16,9 @@
     </a>
     {{ end }}
     <div class="card-text">
+      <div class="btn-links">
+        {{ partial "page_links" (dict "content" $item "is_list" 0) }}
+      </div>
       <h4><a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{ $item.Title }}</a></h4>
       <div class="card-desription">
         {{ with $item.Params.summary }}<p>{{ . | markdownify }}</p>{{ end }}
