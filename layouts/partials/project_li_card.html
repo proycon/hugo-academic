@@ -23,6 +23,9 @@
       <div class="card-desription">
         {{ with $item.Params.summary }}<p>{{ . | markdownify }}</p>{{ end }}
       </div>
+        <div class="card-date">
+            {{ $item.Date.Format "2006-01" }}
+        </div>
     </div>
   </div>
 </div>
