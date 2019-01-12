@@ -1,4 +1,8 @@
 <footer class="site-footer">
+  {{- if .Site.Params.logo_footer -}}
+  <img src="{{ printf "/img/%s" .Site.Params.logo_footer | relURL }}" alt="{{ .Site.Title }}" class="logo">
+  {{- end -}}
+
   {{ with .Site.GetPage "privacy.md" }}
   <p class="powered-by">
     {{ printf "<a href=\"%s\">%s</a>" .RelPermalink .Title | safeHTML }}
@@ -21,5 +25,7 @@
       </a>
     </span>
     {{ end }}
+
   </p>
+
 </footer>
