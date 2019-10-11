@@ -1,0 +1,54 @@
+{{ $item := .item }}
+{{ $widget := .widget }}
+
+{{ $link := .link }}
+{{ $target := .target }}
+
+{{/* Get summary. */}}
+{{ $summary := "" }}
+{{ if $item.Params.summary }}
+  {{ $summary = $item.Params.summary | markdownify | emojify }}
+{{ else if .Params.abstract }}
+  {{ $summary = .Params.abstract | markdownify | emojify }}
+{{ else if $item.Truncated }}
+  {{ $summary = $item.Summary }}
+{{ else }}
+  {{ $summary = $item.Content }}
+{{ end }}
+
+{{ $resource := ($item.Resources.ByType "image").GetMatch "*featured*" }}
+{{ $cover := $item.Params.cover }}
+{{ $js_tag_classes := delimit (apply (apply $item.Params.tags "replace" "." " " "-") "printf" "js-id-%s" ".") " " }}
+<div class="col-12 col-md-6 col-lg-4 project-item isotope-item {{ $js_tag_classes | safeHTMLAttr }}">
+  <div class="card">
+    {{ with $resource }}
+    {{ $image := .Resize (printf "550x q90 %s") }}
+    <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="card-image hover-overlay">
+      <img src="{{ $image.RelPermalink }}" alt="" class="img-responsive">
+    </a>
+    {{ end }}
+    {{ if $cover }}
+     {{ $coverlink := $link }}
+        {{ if $item.Params.url_project }}
+         {{ $coverlink = $item.Params.url_project }}
+        {{ else if $item.Params.url_code }}
+         {{ $coverlink = $item.Params.url_code }}
+        {{ end }}
+    <a href="{{ $coverlink }}" {{ $target | safeHTMLAttr }} class="card-image hover-overlay">
+     <img src="/img/{{ $cover }}" alt="" class="img-responsive">
+    </a>
+    {{ end }}
+    <div class="card-text">
+      <div class="btn-links">
+        {{ partial "page_links" (dict "content" $item "is_list" 0) }}
+      </div>
+      <h4><a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{ $item.Title | markdownify | emojify}}</a></h4>
+      <div class="card-desription">
+        {{ with $item.Params.summary }}<p>{{ . | markdownify }}</p>{{ end }}
+      </div>
+        <div class="card-date">
+            {{ $item.Date.Format "2006-01" }}
+        </div>
+    </div>
+  </div>
+</div>
